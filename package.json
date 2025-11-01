@@ -1,15 +1,6 @@
-﻿{
-    "name":  "proyecto-integrador-monorepo",
-    "private":  true,
-    "scripts":  {
-                    "dev":  "concurrently \"cd backend \u0026\u0026 npm run dev\" \"cd frontend \u0026\u0026 npm run dev\"",
-                    "install-all":  "npm install \u0026\u0026 cd backend \u0026\u0026 npm install \u0026\u0026 cd ../frontend \u0026\u0026 npm install"
-                },
-    "devDependencies":  {
-                            "concurrently":  "^8.2.2",
-                            "vite":  "^7.1.12"
-                        },
-    "engines":  {
-                    "node":  "22.x"
-                }
+{
+  "name": "fase3proyecot",
+  "private": true,
+  "version": "0.0.0",
+  "license": "MIT"
 }
