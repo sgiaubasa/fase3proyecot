@@ -3,7 +3,7 @@ import cors from "cors";
 
 export const config = (app) => {
   const whitelist = [
-    process.env.FRONTEND_HOST,       // dominio prod del FRONT
+    process.env.FRONTEND_HOST,       // dominio prod del FRONT (si lo usás)
     /\.vercel\.app$/,                // previews de vercel
     "http://localhost:5173",
     "http://127.0.0.1:5173",
@@ -11,12 +11,22 @@ export const config = (app) => {
     "http://127.0.0.1:5174",
   ].filter(Boolean);
 
+  const hasWhitelist = whitelist.length > 0;
+
   app.use(
     cors({
       origin(origin, cb) {
-        // requests del server o curl (sin origin) → permitir
+        // requests del server o curl (sin origin) → permitir siempre
         if (!origin) return cb(null, true);
-        const ok = whitelist.some((w) => (w instanceof RegExp ? w.test(origin) : w === origin));
+
+        if (!hasWhitelist) {
+          // Sin whitelist definida: reflejamos el origin (modo permisivo)
+          return cb(null, true);
+        }
+
+        const ok = whitelist.some((w) =>
+          w instanceof RegExp ? w.test(origin) : w === origin
+        );
         return cb(ok ? null : new Error("Not allowed by CORS"), ok);
       },
       credentials: true,
@@ -26,4 +36,3 @@ export const config = (app) => {
     })
   );
 };
-
